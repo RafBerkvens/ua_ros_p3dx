@@ -9,5 +9,9 @@
     <include>
       <uri>model://ground_plane</uri>
     </include>
+    <!-- The Willow Garaga offices -->
+    <include>
+      <uri>model://willowgarage</uri>
+    </include>
   </world>
 </sdf>

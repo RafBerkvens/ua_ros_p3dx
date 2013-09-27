@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
 <package>
   <name>p3dx_description</name>
-  <version>0.0.1</version>
-  <description>A Pioneer 3DX description for Gazebo</description>
+  <version>0.1.0</version>
+  <description>
+    A Pioneer 3DX description for Gazebo. First working version
+  </description>
   
   <maintainer email="rafael.berkvens@uantwerpen.be">Rafael Berkvens</maintainer>
   <license>GPLv3</license>
+  <url>https://github.com/RafBerkvens/ua_ros_p3dx</url>
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>roscpp</build_depend>
