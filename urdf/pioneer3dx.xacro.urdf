@@ -5,7 +5,7 @@
 <!-- =================================================================================== -->
 <!-- Orignal in ucs-ros-pkg. Code is to make pioneer3dx. 
 Modified by Tracy Davies for this pkg-->
-<robot name="pioneer3dx" xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller" xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface" xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="pioneer3dx" xmlns:xacro="http://ros.org/wiki/xacro">
   <!-- Chassis -->
   <link name="base_link">
     <inertial>
@@ -157,11 +157,6 @@ Modified by Tracy Davies for this pkg-->
       </geometry>
     </collision>
   </link>
-  <joint name="center_wheel_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="-0.0035 0 -0.001"/>
-    <parent link="center_wheel"/>
-    <child link="center_hubcap"/>
-  </joint>
   <gazebo reference="center_wheel">
     <material value="Gazebo/Black"/>
     <elem key="mu1" value="10.0"/>
@@ -169,6 +164,11 @@ Modified by Tracy Davies for this pkg-->
     <elem key="kp" value="1000000.0"/>
     <elem key="kd" value="1.0"/>
   </gazebo>
+  <joint name="center_wheel_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.0035 0 -0.001"/>
+    <parent link="center_wheel"/>
+    <child link="center_hubcap"/>
+  </joint>
   <link name="p3dx_left_wheel">
     <inertial>
       <mass value="0.5"/>
@@ -220,11 +220,6 @@ Modified by Tracy Davies for this pkg-->
       </geometry>
     </collision>
   </link>
-  <transmission name="base_link_left_wheel_trans" type="pr2_mechanism_model/SimpleTransmission">
-    <actuator name="base_left_wheel_motor"/>
-    <joint name="base_left_wheel_joint"/>
-    <mechanicalReduction>75.0676691729</mechanicalReduction>
-  </transmission>
   <joint name="base_left_wheel_joint" type="continuous">
     <axis xyz="0 1 0"/>
     <anchor xyz="0 0 0"/>
@@ -295,11 +290,6 @@ Modified by Tracy Davies for this pkg-->
       </geometry>
     </collision>
   </link>
-  <transmission name="base_link_right_wheel_trans" type="pr2_mechanism_model/SimpleTransmission">
-    <actuator name="base_right_wheel_motor"/>
-    <joint name="base_right_wheel_joint"/>
-    <mechanicalReduction>-75.0676691729</mechanicalReduction>
-  </transmission>
   <joint name="base_right_wheel_joint" type="continuous">
     <axis xyz="0 1 0"/>
     <anchor xyz="0 0 0"/>
@@ -350,37 +340,40 @@ Modified by Tracy Davies for this pkg-->
     <parent link="base_link"/>
     <child link="front_sonar"/>
   </joint>
-  <link name="back_sonar">
-    <inertial>
-      <mass value="0.0001"/>
-      <origin xyz="0 0 0"/>
-      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
-    </inertial>
-    <visual name="back_sonar_vis">
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry name="pioneer_geom">
-        <mesh filename="package://p3dx_description/meshes/back_sonar.stl"/>
-      </geometry>
-      <material name="SonarYellow">
-        <color rgba="0.715 0.583 0.210 1.0"/>
-      </material>
-    </visual>
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size="0 0 0"/>
-      </geometry>
-    </collision>
-  </link>
-  <gazebo reference="back_sonar">
-    <material value="Gazebo/Yellow"/>
-  </gazebo>
-  <joint name="base_back_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.109 0 0.209"/>
-    <parent link="base_link"/>
-    <child link="back_sonar"/>
-  </joint>
-  <gazebo>
+  <!-- 	<link name="back_sonar">
+		<inertial>
+			<mass value="0.0001"/>	
+			<origin xyz="0 0 0"/>
+			<inertia ixx="1" ixy="0" ixz="0"
+				 iyy="1" iyz="0" izz="1"/>
+		</inertial>
+		<visual name="back_sonar_vis">
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry name="pioneer_geom">
+				<mesh filename="package://p3dx_description/meshes/back_sonar.stl"/>
+			</geometry>
+			<material name="SonarYellow">
+				<color rgba="0.715 0.583 0.210 1.0"/>
+			</material>
+		</visual>
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="0 0 0"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<gazebo reference="back_sonar">
+		<material value="Gazebo/Yellow"/>
+	</gazebo>
+
+	<joint name="base_back_joint" type="fixed">
+		<origin xyz="0.109 0 0.209" rpy="0 0 0"/>
+		<parent link="base_link"/>
+		<child link="back_sonar"/>
+	</joint> -->
+  <!--   <gazebo>
     <controller:differential_position2d name="controller1">
       <update>100</update>
       <leftJoint>base_right_wheel_joint</leftJoint>
@@ -388,8 +381,11 @@ Modified by Tracy Davies for this pkg-->
       <wheelSeparation>0.39</wheelSeparation>
       <wheelDiameter>0.15</wheelDiameter>
       <torque>5</torque>
+
+
       <interface:position name="position_iface_0"/>
     </controller:differential_position2d>
+
     <controller:gazebo_ros_p3d name="p3d_base_controller" plugin="libgazebo_ros_p3d.so">
       <alwaysOn>true</alwaysOn>
       <updateRate>100.0</updateRate>
@@ -397,18 +393,18 @@ Modified by Tracy Davies for this pkg-->
       <topicName>base_pose_ground_truth</topicName>
       <gaussianNoise>0.01</gaussianNoise>
       <frameName>map</frameName>
-      <xyzOffsets>0 0 0</xyzOffsets>
-      <!-- initialize odometry for fake localization-->
+      <xyzOffsets>0 0 0</xyzOffsets> initialize odometry for fake localization
       <rpyOffsets>0 0 0</rpyOffsets>
       <interface:position name="p3d_base_position"/>
     </controller:gazebo_ros_p3d>
-    <!-- this publishes empty joint_states due to no transmission, but
+
+    this publishes empty joint_states due to no transmission, but
          triggering robot_state_puublisher to publish tf between fixed joints in erratic,
-         (e.g. base_laser_link for the base_scan frame) -->
+         (e.g. base_laser_link for the base_scan frame)
     <controller:gazebo_ros_controller_manager name="gazebo_ros_controller_manager" plugin="libgazebo_ros_controller_manager.so">
       <alwaysOn>true</alwaysOn>
       <updateRate>1000.0</updateRate>
-      <interface:audio name="gazebo_ros_controller_manager_dummy_iface"/>
+      <interface:audio name="gazebo_ros_controller_manager_dummy_iface" />
     </controller:gazebo_ros_controller_manager>
-  </gazebo>
+  </gazebo> -->
 </robot>

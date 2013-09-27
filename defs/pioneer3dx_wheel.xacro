@@ -66,11 +66,11 @@
   </collision>
   </link>
 
-  <transmission type="pr2_mechanism_model/SimpleTransmission" name="${parent}_${suffix}_wheel_trans">
+<!--   <transmission type="pr2_mechanism_model/SimpleTransmission" name="${parent}_${suffix}_wheel_trans">
     <actuator name="base_${suffix}_wheel_motor" />
     <joint name="base_${suffix}_wheel_joint" />
     <mechanicalReduction>${reflect * 624/35 * 80/19}</mechanicalReduction>
-  </transmission>
+  </transmission> -->
 
   <joint name="base_${suffix}_wheel_joint" type="continuous">
     <axis xyz="0 1 0"/>

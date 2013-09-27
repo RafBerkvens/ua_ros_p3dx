@@ -3,12 +3,7 @@
 <!-- Orignal in ucs-ros-pkg. Code is to make pioneer3dx. 
 Modified by Tracy Davies for this pkg-->
 
-<robot name="pioneer3dx"
-  xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor" 
-  xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
-  xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
-  xmlns:xacro="http://ros.org/wiki/xacro">
-
+<robot name="pioneer3dx" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:include filename="$(find p3dx_description)/defs/pioneer3dx_wheel.xacro"/>
 
@@ -38,7 +33,6 @@ Modified by Tracy Davies for this pkg-->
 				</geometry>
 		</collision>
 	</link>
-
 	<gazebo reference="base_link">
 		<material value="Gazebo/Red"/>
 	</gazebo>
@@ -183,21 +177,19 @@ Modified by Tracy Davies for this pkg-->
 		</geometry>
 	</collision>
 	</link>
+  <gazebo reference="center_wheel">
+    <material value="Gazebo/Black"/>
+    <elem key="mu1" value="10.0" />
+    <elem key="mu2" value="10.0" />
+    <elem key="kp"  value="1000000.0" />
+    <elem key="kd"  value="1.0" />
+  </gazebo>
 
 	<joint name="center_wheel_joint" type="fixed">
 		<origin xyz="-0.0035 0 -0.001" rpy="0 0 0"/>
 		<parent link="center_wheel"/>
 		<child link="center_hubcap"/>
 	</joint>
-
-	<gazebo reference="center_wheel">
-		<material value="Gazebo/Black"/>
-    <elem key="mu1" value="10.0" />
-    <elem key="mu2" value="10.0" />
-    <elem key="kp"  value="1000000.0" />
-    <elem key="kd"  value="1.0" />
-	</gazebo>
-
 
 <xacro:p3dx_wheel suffix="left" parent="base_link" reflect="1"/>
 <xacro:p3dx_wheel suffix="right" parent="base_link" reflect="-1"/>
@@ -226,7 +218,6 @@ Modified by Tracy Davies for this pkg-->
 			</geometry>
 		</collision>
 	</link>
-
 	<gazebo reference="front_sonar">
 		<material value="Gazebo/Yellow"/>
 	</gazebo>
@@ -237,7 +228,7 @@ Modified by Tracy Davies for this pkg-->
 		<child link="front_sonar"/>
 	</joint>
 
-	<link name="back_sonar">
+<!-- 	<link name="back_sonar">
 		<inertial>
 			<mass value="0.0001"/>	
 			<origin xyz="0 0 0"/>
@@ -269,9 +260,9 @@ Modified by Tracy Davies for this pkg-->
 		<origin xyz="0.109 0 0.209" rpy="0 0 0"/>
 		<parent link="base_link"/>
 		<child link="back_sonar"/>
-	</joint>
+	</joint> -->
 
-  <gazebo>
+<!--   <gazebo>
     <controller:differential_position2d name="controller1">
       <update>100</update>
       <leftJoint>base_right_wheel_joint</leftJoint>
@@ -291,19 +282,19 @@ Modified by Tracy Davies for this pkg-->
       <topicName>base_pose_ground_truth</topicName>
       <gaussianNoise>0.01</gaussianNoise>
       <frameName>map</frameName>
-      <xyzOffsets>0 0 0</xyzOffsets> <!-- initialize odometry for fake localization-->
+      <xyzOffsets>0 0 0</xyzOffsets> initialize odometry for fake localization
       <rpyOffsets>0 0 0</rpyOffsets>
       <interface:position name="p3d_base_position"/>
     </controller:gazebo_ros_p3d>
 
-    <!-- this publishes empty joint_states due to no transmission, but
+    this publishes empty joint_states due to no transmission, but
          triggering robot_state_puublisher to publish tf between fixed joints in erratic,
-         (e.g. base_laser_link for the base_scan frame) -->
+         (e.g. base_laser_link for the base_scan frame)
     <controller:gazebo_ros_controller_manager name="gazebo_ros_controller_manager" plugin="libgazebo_ros_controller_manager.so">
       <alwaysOn>true</alwaysOn>
       <updateRate>1000.0</updateRate>
       <interface:audio name="gazebo_ros_controller_manager_dummy_iface" />
     </controller:gazebo_ros_controller_manager>
-  </gazebo>
+  </gazebo> -->
 
 </robot>
