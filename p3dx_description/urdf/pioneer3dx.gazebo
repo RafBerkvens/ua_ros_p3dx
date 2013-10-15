@@ -100,7 +100,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<gazebo reference="lms100">
 		<sensor type="gpu_ray" name="head_hokuyo_sensor">
 			<pose>0 0 0 0 0 0</pose>
-			<visualize>true</visualize>
+			<visualize>false</visualize>
 			<update_rate>50</update_rate>
 			<ray>
 				<scan>
