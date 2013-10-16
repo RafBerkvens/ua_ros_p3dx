@@ -81,7 +81,7 @@ work original in ucs-ros-pkg.
     </plugin>
   </gazebo>
   <gazebo reference="lms100">
-    <sensor name="head_hokuyo_sensor" type="gpu_ray">
+    <sensor name="head_hokuyo_sensor" type="ray">
       <pose>0 0 0 0 0 0</pose>
       <visualize>false</visualize>
       <update_rate>50</update_rate>
@@ -108,7 +108,7 @@ work original in ucs-ros-pkg.
           <stddev>0.01</stddev>
         </noise>
       </ray>
-      <plugin filename="libgazebo_ros_gpu_laser.so" name="gazebo_ros_head_hokuyo_controller">
+      <plugin filename="libgazebo_ros_laser.so" name="gazebo_ros_head_hokuyo_controller">
         <topicName>p3dx/laser/scan</topicName>
         <frameName>lms100</frameName>
       </plugin>
